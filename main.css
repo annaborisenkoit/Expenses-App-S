@@ -46,6 +46,15 @@ ol {
   width: 484px;
 }
 
+.categorySelect {
+  margin-top: 18px;
+  width: 484px;
+  height: 58px;
+  padding-left: 22px;
+  font-size: inherit;
+  border: 1px solid #000;
+}
+
 .moneyInput {
   width: 100%;
   display: flex;
@@ -71,6 +80,7 @@ ol {
 .addButton {
   display: block;
   width: 370px;
+  height: 59px;
   padding: 10px 110px;
   font-size: inherit;
   color: #ffffff;
