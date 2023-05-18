@@ -1,6 +1,7 @@
 //Объявление переменных - Строковых констант
 const STATUS_IN_LIMIT = 'все хорошо';
 const STATUS_OUT_OF_LIMIT = 'все плохо';
+const CHANGE_LIMIT_TEXT = 'Новый лимит';
 
 // Объявление переменных - ссылок на html элементы
 const inputNode = document.getElementById('expenseInput');
@@ -10,10 +11,21 @@ const clearButtonNode = document.getElementById('clearButton');
 const totalValueNode = document.getElementById('totalValue');
 const statusNode = document.getElementById('statusText');
 const historyList = document.getElementById('historyList');
+const changeLimitBtn = document.getElementById('changeLimitBtn');
 
 // Получает лимит из элемента html с id LimitValue
 const limitNode = document.getElementById('limitValue');
-const limit = parseInt(limitNode.innerText);
+let limit = parseInt(limitNode.innerText);
+
+function initLimit() {
+  const limitFromStorage = parseInt(localStorage.getItem('limit'));
+  if (!limitFromStorage) {
+    return;
+  }
+  limitNode.innerText = limitFromStorage;
+}
+
+initLimit();
 
 //Объявление нашей основной переменной
 //При запуске она содержит в себе пустой массив
@@ -130,6 +142,7 @@ function addButtonHandler() {
   if (currentCategory === 'Категория') {
     //тогда выйди из функции, тк это значение говорит нам о том
     //что пользователь не выбрал категорию
+    alert('Не задана категория');
     return;
   }
 
@@ -157,6 +170,32 @@ function clearButtonHandler() {
   render();
 }
 
+//фунукция-обработчик (хендлер) кнопки изменения лимита
+function changelimitHandler() {
+  // в переменную newLimit мы записываем результат выполения функции prompt
+  //в которой передаем параметр "Новый лимит"
+  //prompt вызывает встроенную в браузер модалку с инпутом
+  //а возвращает то что ввел в инпут пользователь
+  const newLimit = prompt(CHANGE_LIMIT_TEXT);
+
+  //потому что там может быть строка
+  const newLimitValue = parseInt(newLimit);
+
+  if (!newLimitValue) {
+    return;
+  }
+
+  //прописываем в html новое значение лимита
+  limitNode.innerText = newLimitValue;
+  // а также прописываем это значение в нашу переменную с лимитом
+  limit = newLimitValue;
+  localStorage.setItem('limit', newLimitValue);
+
+  //обновляем интерфейс
+  render();
+}
+
 //Привязка функций-обработчиков к кнопкам
 addButtonNode.addEventListener('click', addButtonHandler);
 clearButtonNode.addEventListener('click', clearButtonHandler);
+changeLimitBtn.addEventListener('click', changelimitHandler);
