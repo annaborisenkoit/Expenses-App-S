@@ -134,3 +134,10 @@ ol {
 .history__list {
   margin-top: 21px;
 }
+
+@media (max-width: 767px) {
+  .expenses {
+    width: 100%;
+    flex-direction: column;
+  }
+}
